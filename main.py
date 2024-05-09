@@ -1,8 +1,8 @@
 import pyxel as pyx
 
 
-height = 1080
-width = 1920
+height = 500
+width = 500
 cells = [[15,15],[30,30],[45,45]]
 color = 7
 
