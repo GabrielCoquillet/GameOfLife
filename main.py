@@ -1,30 +1,50 @@
 import pyxel as pyx
 
 
-height = 500
-width = 500
-cells = [[15,15],[30,30],[45,45]]
+height = 128
+width = 128
+alive_cells = [[15,15],[15,16],[15,14]]
+dead_cells = [[i,j] for i in range(128) for j in range(128)]
+for cell in alive_cells:
+    dead_cells.remove(cell)
 color = 7
 
-pyx.init(height=height,width=width,title="Game Of Life")
+
+
+pyx.init(height=height,width=width,title="Game Of Life", fps=1)
 
 def prox(x_cell, y_cell):
-    if pyx.pget(x_cell-2, y_cell+2) == color:
-        return True
-    elif pyx.pget(x_cell+2, y_cell-2) == color:
-        return True    
-    elif pyx.pget(x_cell+6, y_cell+2) == color:
-        return True
-    elif pyx.pget(x_cell+6, y_cell+6) == color:
-        return True
+    cpt = 0
+    if [x_cell+1, y_cell+1] in alive_cells:
+        cpt+=1
+    elif [x_cell, y_cell+1] in alive_cells:
+        cpt+=1
+    elif [x_cell+1, y_cell] in alive_cells:
+        cpt+=1
+    elif [x_cell-1, y_cell+1] in alive_cells:
+        cpt+=1
+    elif [x_cell-1, y_cell] in alive_cells:
+        cpt+=1
+    elif [x_cell-1, y_cell-1] in alive_cells:
+        cpt+=1
+    elif [x_cell, y_cell-1] in alive_cells:
+        cpt+=1
+    elif [x_cell+1, y_cell-1] in alive_cells:
+        cpt+=1
+    if cpt != 0:
+        return cpt
+    else:
+        return False
 
 def update():
-    for cell in cells:
-        if prox(cell[0], cell[1]) == False:
-            cells.remove(cell)
+    for cell in alive_cells:
+        if prox(cell[0], cell[1]) == False or prox(cell[0], cell[1])>3 or prox(cell[0], cell[1])<2:
+            alive_cells.remove(cell)
+    print(alive_cells)
 
 def draw():
-    for cell in cells:
-        pyx.rect(cell[0], cell[1], 4,4, color)
+    pyx.cls(0)
+    for cell in alive_cells:
+        pyx.rect(cell[0], cell[1], 1,1, color)
 
 pyx.run(update, draw)
