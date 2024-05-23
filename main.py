@@ -1,18 +1,18 @@
 import pyxel as pyx
 
 
-height = 128
-width = 128
+size = 128
 alive_cells = [[15,15],[16,16],[16,17],[15,17],[14,17]]
-dead_cells = [[i,j] for i in range(128) for j in range(128)]
+dead_cells = [[i,j] for i in range(1024) for j in range(1024)]
 print(dead_cells[:10])
 for cell in alive_cells:
     dead_cells.remove(cell)
 color = 7
 cpt_t = 0
+cam_x , cam_y = 0, 0
 
 
-pyx.init(height=height,width=width,title="Game Of Life", fps=5)
+pyx.init(height=size,width=size,title="Game Of Life", fps=30)
 
 def prox(x_cell, y_cell):
     cpt = 0
@@ -32,9 +32,30 @@ def prox(x_cell, y_cell):
         cpt+=1
     if [x_cell+1, y_cell-1] in alive_cells:
         cpt+=1
-    return cpt      
+    return cpt
+
+def menu():
+    pass
+
+def editor(alive, dead):
+    pass
+
+def cam_change(x, y):
+    if pyx.btnr(pyx.KEY_UP):
+        y-=10
+    elif pyx.btnr(pyx.KEY_DOWN):
+        y+=10
+    elif pyx.btnr(pyx.KEY_LEFT):
+        x-=10
+    elif pyx.btnr(pyx.KEY_RIGHT):
+        x+=10
+    pyx.camera(x, y)
+    return x, y
+
+def dead_to_alive()
 
 def update():
+    global cam_x, cam_y
     to_dead = []
     to_alive = []
     for cell in alive_cells:
@@ -49,6 +70,11 @@ def update():
     for cell in to_dead:
         alive_cells.remove(cell)
         dead_cells.append(cell)
+    if menu == True:
+        menu()
+    if editor == True:
+        editor(alive_cells, dead_cells)
+    cam_x, cam_y = cam_change(cam_x, cam_y)
 
 
 def draw():
