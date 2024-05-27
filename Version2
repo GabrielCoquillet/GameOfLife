@@ -1,3 +1,4 @@
+
 import pyxel as pyx
 
 
@@ -11,6 +12,7 @@ color = 7
 cpt_t = 0
 cam_x , cam_y = 0, 0
 jeu_lancé = False
+
 
 
 pyx.init(height=size,width=size,title="Game Of Life", fps=5)
@@ -104,11 +106,6 @@ def update():
 
 def draw():
     pyx.cls(0)
-    #borders
-    pyx.rect(-2,2,260,260,2)
-    pyx.rect()
-    
-    
     for cell in alive_cells:
         pyx.rect(cell[0]*2, cell[1]*2, 2,2, color)
 
