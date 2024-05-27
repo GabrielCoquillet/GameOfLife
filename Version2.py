@@ -13,7 +13,6 @@ cam_x , cam_y = 0, 0
 jeu_lancé = False
 
 
-
 pyx.init(height=size,width=size,title="Game Of Life", fps=5)
 
 def prox(x_cell, y_cell):
@@ -41,12 +40,12 @@ def menu():
 
 def selectionner() :
     if pyx.btnr(pyx.MOUSE_BUTTON_LEFT) :
-        if not [pyx.mouse_x//2,pyx.mouse_y//2] in alive_cells :
-            alive_cells.append([pyx.mouse_x//2,pyx.mouse_y//2])
-            dead_cells.remove([pyx.mouse_x//2,pyx.mouse_y//2])
+        if not [(cam_x+pyx.mouse_x)//2,(cam_y+pyx.mouse_y)//2] in alive_cells :
+            alive_cells.append([(cam_x+pyx.mouse_x)//2,(cam_y+pyx.mouse_y)//2])
+            dead_cells.remove([(cam_x+pyx.mouse_x)//2,(cam_y+pyx.mouse_y)//2])
         else :
-            dead_cells.append([pyx.mouse_x//2,pyx.mouse_y//2])
-            alive_cells.remove([pyx.mouse_x//2,pyx.mouse_y//2])
+            dead_cells.append([(cam_x+pyx.mouse_x)//2,(cam_y+pyx.mouse_y)//2])
+            alive_cells.remove([(cam_x+pyx.mouse_x)//2,(cam_y+pyx.mouse_y)//2])
 
 
 def editor(alive, dead):
@@ -105,6 +104,11 @@ def update():
 
 def draw():
     pyx.cls(0)
+    #borders
+    pyx.rect(-2,-2,260,260,13)
+    pyx.rect(0,0,256,256,0)
+
+
     for cell in alive_cells:
         pyx.rect(cell[0]*2, cell[1]*2, 2,2, color)
 
