@@ -52,7 +52,6 @@ def cam_change(x, y):
     pyx.camera(x, y)
     return x, y
 
-def dead_to_alive()
 
 def update():
     global cam_x, cam_y
