@@ -3,12 +3,15 @@ import pyxel
 class App():
     def __init__(self):
         pyxel.init(128,128,title="Game Of Life", fps=10)
+        pyxel.load("game.pyxres")
         self.alive_cells = []
         self.dead_cells = [[i,j] for i in range(0,128) for j in range(0,128) if [i,j] not in self.alive_cells]
         self.cam_x = 0
         self.cam_y = 0
         self.to_dead = []
         self.to_alive = []
+        self.mode = 0
+        self.rules = []
         self.jeu_lance = False
         self.menu_stat = True
         pyxel.run(self.update, self.draw)
@@ -76,16 +79,16 @@ class App():
         if pyxel.btnr(pyxel.KEY_UP):
             self.cam_y-=5
         elif pyxel.btnr(pyxel.KEY_DOWN):
-            self.cam_yy+=5
+            self.cam_y+=5
         elif pyxel.btnr(pyxel.KEY_LEFT):
-            self.cam_yx-=5
+            self.cam_x-=5
         elif pyxel.btnr(pyxel.KEY_RIGHT):
-            self.cam_yx+=5
+            self.cam_x+=5
         pyxel.camera(self.cam_x, self.cam_y)
 
     def menu(self):
         if pyxel.btn(pyxel.KEY_RETURN):
-            self.menu = False
+            self.menu_stat = False
 
 
     def update(self):
@@ -113,10 +116,14 @@ class App():
         if self.menu_stat == True:
             pyxel.text(5,5, 'Game Of Life', 7)
             pyxel.text(5,20, 'Choose your version', 7)
+            pyxel.blt(5,65,0,0,0,16,16)
+            pyxel.blt(65,65,0,16,0,16,16)
+            pyxel.blt(5,110,0,0,16,16,16)
+            pyxel.blt(65,110,0,16,16,16,16)
 
         else:
-            pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
+        pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
 
 App()
