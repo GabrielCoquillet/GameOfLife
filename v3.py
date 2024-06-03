@@ -10,9 +10,19 @@ class App():
         self.to_dead = []
         self.to_alive = []
         self.jeu_lance = False
+        self.menu_stat = True
         pyxel.run(self.update, self.draw)
 
     def prox(self,x_cell, y_cell):
+        '''
+
+        @x_cell : int
+        @y_cell : int
+        @cpt : int
+
+        agrémente de 1 @cpt pour chaque cellule vivante autours de @x_cell, @y_cell
+
+        '''
         cpt = 0
         if [x_cell+1, y_cell+1] in self.alive_cells:
             cpt+=1
@@ -58,6 +68,11 @@ class App():
                 self.alive_cells.remove([(self.cam_x+pyxel.mouse_x)//2,(self.cam_y+pyxel.mouse_y)//2])
 
     def cam_change(self):
+        '''
+        @self.cam_x : int
+        @self.cam_y : int
+        change les coordonnées du coin supérieur gauche en fonction des flèches pressées
+        '''
         if pyxel.btnr(pyxel.KEY_UP):
             self.cam_y-=5
         elif pyxel.btnr(pyxel.KEY_DOWN):
@@ -68,27 +83,40 @@ class App():
             self.cam_yx+=5
         pyxel.camera(self.cam_x, self.cam_y)
 
+    def menu(self):
+        if pyxel.btn(pyxel.KEY_RETURN):
+            self.menu = False
+
+
     def update(self):
-        if self.jeu_lance == True :
-            if pyxel.btnp(pyxel.KEY_SPACE):
-                self.jeu_lance = False
-            self.change_stat()
-            self.cam_change()
+        if self.menu_stat == False:
+            if self.jeu_lance == True :
+                if pyxel.btnp(pyxel.KEY_SPACE):
+                    self.jeu_lance = False
+                self.change_stat()
+                self.cam_change()
 
-            if pyxel.btnr(pyxel.KEY_RETURN) :
-                self.dead_cells=[[i,j] for i in range(0,128) for j in range(0,128) if [i,j] not in self.alive_cells]
-                self.alive_cells=[]
-                self.jeu_lance=False
+                if pyxel.btnr(pyxel.KEY_RETURN) :
+                    self.dead_cells=[[i,j] for i in range(0,128) for j in range(0,128) if [i,j] not in self.alive_cells]
+                    self.alive_cells=[]
+                    self.jeu_lance=False
 
-        elif self.jeu_lance==False :
-            self.selectionner()
-            if pyxel.btnr(pyxel.KEY_SPACE) :
-                self.jeu_lance=True
+            elif self.jeu_lance==False :
+                self.selectionner()
+                if pyxel.btnr(pyxel.KEY_SPACE) :
+                    self.jeu_lance=True
+        elif self.menu_stat == True:
+            self.menu()
 
     def draw(self):
         pyxel.cls(0)
-        pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,7)
-        for cell in self.alive_cells:
-            pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
+        if self.menu_stat == True:
+            pyxel.text(5,5, 'Game Of Life', 7)
+            pyxel.text(5,20, 'Choose your version', 7)
+
+        else:
+            pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,7)
+            for cell in self.alive_cells:
+                pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
 
 App()
