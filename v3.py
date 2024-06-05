@@ -56,33 +56,40 @@ class App():
         '''
         self.to_dead = []
         self.to_alive = []
-        for cell in self.alive_cells:
-            if self.mode == 1:
+
+        #vérification de mort de cellule : 
+
+        for cell in self.alive_cells: 
+            if self.mode == 1: #S23 -> Conway's Game Of Life
                 if self.prox(cell[0], cell[1])!=2 and self.prox(cell[0], cell[1])!=3:
                     self.to_dead.append(cell)
-            elif self.mode == 2:
+            elif self.mode == 2: #S014567 -> Fuzz
                 if self.prox(cell[0], cell[1])!=0 and self.prox(cell[0], cell[1])!=1 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=5 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7:
                     self.to_dead.append(cell)
-            elif self.mode == 3:
+            elif self.mode == 3: #S1 -> Gnari
                 if self.prox(cell[0], cell[1])!=1:
                     self.to_dead.append(cell)
-            elif self.mode == 4:
+            elif self.mode == 4: #S34678 -> InverseLife
                 if self.prox(cell[0], cell[1])!=3 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7 and self.prox(cell[0], cell[1])!=8:
                     self.to_dead.append(cell)
-                    
+        
+        #verification de naissance de cellule :
+
         for cell in self.dead_cells:
-            if self.mode ==1:
+            if self.mode ==1: #B3 -> Conway's Game Of Life
                 if self.prox(cell[0], cell[1])==3:
                     self.to_alive.append(cell)
-            elif self.mode == 2:
+            elif self.mode == 2: #B1 -> Fuzz
                 if self.prox(cell[0], cell[1])==1:
                     self.to_alive.append(cell)
-            elif self.mode == 3:
+            elif self.mode == 3: #B1 -> Gnari
                 if self.prox(cell[0], cell[1])==1:
                     self.to_alive.append(cell)
-            elif self.mode == 4: #0123478
+            elif self.mode == 4: #B0123478 -> InverseLife
                 if self.prox(cell[0], cell[1])==0 or self.prox(cell[0], cell[1])==1 or self.prox(cell[0], cell[1])==2 or self.prox(cell[0], cell[1])==3 or self.prox(cell[0], cell[1])==4 or self.prox(cell[0], cell[1])==7 or self.prox(cell[0], cell[1])==8:
                     self.to_alive.append(cell)
+
+        #update des listes :
 
         for cell in self.to_alive:
             self.dead_cells.remove(cell)
@@ -119,7 +126,7 @@ class App():
             self.cam_x-=5
         elif pyxel.btnr(pyxel.KEY_RIGHT):
             self.cam_x+=5
-        pyxel.camera(self.cam_x, self.cam_y)
+        pyxel.camera(self.cam_x, self.cam_y) #change les coordonnées x et y du coin supérieur gauche de la fenetre pyxel.
 
     def menu(self):
         '''
