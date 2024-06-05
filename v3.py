@@ -135,12 +135,15 @@ class App():
         elif pyxel.mouse_x>65 and pyxel.mouse_x<81 and pyxel.mouse_y>65 and pyxel.mouse_y<81 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
             self.mode = 2 #B1/S014567 -> Fuzz
             self.menu_stat = False
+            self.dead_cells = [[i,j] for i in range(0,64) for j in range(0,64) if [i,j] not in self.alive_cells]
         elif pyxel.mouse_x>5 and pyxel.mouse_x<21 and pyxel.mouse_y>110 and pyxel.mouse_y<126 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
             self.mode = 3 #B1/S1 -> Gnari
             self.menu_stat = False
+            self.dead_cells = [[i,j] for i in range(0,64) for j in range(0,64) if [i,j] not in self.alive_cells]
         elif pyxel.mouse_x>65 and pyxel.mouse_x<81 and pyxel.mouse_y>110 and pyxel.mouse_y<126 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
             self.mode = 4 #B0123478/S34678 -> InverseLife
             self.menu_stat = False
+            self.dead_cells = [[i,j] for i in range(0,64) for j in range(0,64) if [i,j] not in self.alive_cells]
 
     def update(self):
         if self.menu_stat == False:
@@ -176,10 +179,6 @@ class App():
             pyxel.text(5,5,'mode:'+str(self.mode),7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
-            pyxel.rect(-5,-5,266,5,5)
-            pyxel.rect(-5,-5,5,266,5)
-            pyxel.rect(261,-5,5,266,5)
-            pyxel.rect(-5,256,266,5,5)
         pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
 
 App()
