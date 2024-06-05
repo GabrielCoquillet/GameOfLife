@@ -11,7 +11,7 @@ class App():
         self.to_dead = []
         self.to_alive = []
         self.mode = 0
-        self.rules = []
+        self.rules = [ [[3],[2,3]] , [[1],[0,1,4,5,6,7]] , [[1],[1]] , [[0,1,2,3,4,7,8],[3,4,6,7,8]] ]
         self.jeu_lance = False
         self.menu_stat = True
         pyxel.run(self.update, self.draw)
@@ -49,11 +49,33 @@ class App():
         self.to_dead = []
         self.to_alive = []
         for cell in self.alive_cells:
-            if self.prox(cell[0], cell[1])!=2 and self.prox(cell[0], cell[1])!=3:
-                self.to_dead.append(cell)
+            if self.mode == 1:
+                if self.prox(cell[0], cell[1])!=2 and self.prox(cell[0], cell[1])!=3:
+                    self.to_dead.append(cell)
+            elif self.mode == 2:
+                if self.prox(cell[0], cell[1])!=0 and self.prox(cell[0], cell[1])!=1 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=5 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7:
+                    self.to_dead.append(cell)
+            elif self.mode == 3:
+                if self.prox(cell[0], cell[1])!=1:
+                    self.to_dead.append(cell)
+            elif self.mode == 4:
+                if self.prox(cell[0], cell[1])!=3 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7 and self.prox(cell[0], cell[1])!=8:
+                    self.to_dead.append(cell)
+                    
         for cell in self.dead_cells:
-            if self.prox(cell[0], cell[1])==3:
-                self.to_alive.append(cell)
+            if self.mode ==1:
+                if self.prox(cell[0], cell[1])==3:
+                    self.to_alive.append(cell)
+            elif self.mode == 2:
+                if self.prox(cell[0], cell[1])==1:
+                    self.to_alive.append(cell)
+            elif self.mode == 3:
+                if self.prox(cell[0], cell[1])==1:
+                    self.to_alive.append(cell)
+            elif self.mode == 4: #0123478
+                if self.prox(cell[0], cell[1])==0 or self.prox(cell[0], cell[1])==1 or self.prox(cell[0], cell[1])==2 or self.prox(cell[0], cell[1])==3 or self.prox(cell[0], cell[1])==4 or self.prox(cell[0], cell[1])==7 or self.prox(cell[0], cell[1])==8:
+                    self.to_alive.append(cell)
+
         for cell in self.to_alive:
             self.dead_cells.remove(cell)
             self.alive_cells.append(cell)
@@ -89,7 +111,18 @@ class App():
     def menu(self):
         if pyxel.btn(pyxel.KEY_RETURN):
             self.menu_stat = False
-
+        if pyxel.mouse_x>5 and pyxel.mouse_x<21 and pyxel.mouse_y>65 and pyxel.mouse_y<81 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            self.mode = 1 #B3/S23 -> Conway's Game Of Life
+            self.menu_stat = False
+        elif pyxel.mouse_x>65 and pyxel.mouse_x<81 and pyxel.mouse_y>65 and pyxel.mouse_y<81 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            self.mode = 2 #B1/S014567 -> Fuzz
+            self.menu_stat = False
+        elif pyxel.mouse_x>5 and pyxel.mouse_x<21 and pyxel.mouse_y>110 and pyxel.mouse_y<126 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            self.mode = 3 #B1/S1 -> Gnari
+            self.menu_stat = False
+        elif pyxel.mouse_x>65 and pyxel.mouse_x<81 and pyxel.mouse_y>110 and pyxel.mouse_y<126 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            self.mode = 4 #B0123478/S34678 -> InverseLife
+            self.menu_stat = False
 
     def update(self):
         if self.menu_stat == False:
@@ -122,6 +155,7 @@ class App():
             pyxel.blt(65,110,0,16,16,16,16)
 
         else:
+            pyxel.text(5,5,'mode:'+str(self.mode),7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
         pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
