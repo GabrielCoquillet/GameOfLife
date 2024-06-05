@@ -27,21 +27,21 @@ class App():
 
         '''
         cpt = 0
-        if [x_cell+1, y_cell+1] in self.alive_cells:
+        if [x_cell+1, y_cell+1] in self.alive_cells: #diag bas droit
             cpt+=1
-        if [x_cell, y_cell+1] in self.alive_cells:
+        if [x_cell, y_cell+1] in self.alive_cells: #bas
             cpt+=1
-        if [x_cell+1, y_cell] in self.alive_cells:
+        if [x_cell+1, y_cell] in self.alive_cells: #droite
             cpt+=1
-        if [x_cell-1, y_cell+1] in self.alive_cells:
+        if [x_cell-1, y_cell+1] in self.alive_cells: #diag inf gauche
             cpt+=1
-        if [x_cell-1, y_cell] in self.alive_cells:
+        if [x_cell-1, y_cell] in self.alive_cells: #gauche
             cpt+=1
-        if [x_cell-1, y_cell-1] in self.alive_cells:
+        if [x_cell-1, y_cell-1] in self.alive_cells: #diag sup gauche
             cpt+=1
-        if [x_cell, y_cell-1] in self.alive_cells:
+        if [x_cell, y_cell-1] in self.alive_cells: #haut
             cpt+=1
-        if [x_cell+1, y_cell-1] in self.alive_cells:
+        if [x_cell+1, y_cell-1] in self.alive_cells: #diag sup droit
             cpt+=1
         return cpt
 
