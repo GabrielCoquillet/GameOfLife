@@ -178,9 +178,15 @@ class App():
             pyxel.text(5,5, 'Game Of Life', 7)
             pyxel.text(5,20, 'Choose your version', 7)
             pyxel.blt(5,65,0,0,0,16,16)
+            pyxel.text(25,65,"Conway's",7)
+            pyxel.text(25,75,"Game",7)
             pyxel.blt(65,65,0,16,0,16,16)
+            pyxel.text(85,65,"Fuzz",7)
             pyxel.blt(5,110,0,0,16,16,16)
+            pyxel.text(25,110,"Gnari",7)
             pyxel.blt(65,110,0,16,16,16,16)
+            pyxel.text(85,110,"Inverse",7)
+            pyxel.text(85,120,"Life",7)
 
         else:
             pyxel.text(5,5,'mode:'+str(self.mode),7)
