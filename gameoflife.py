@@ -202,6 +202,6 @@ class App():
             pyxel.text(5,5,'mode:'+self.rules[self.mode-1],7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
-        pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
+        pyxel.rect(self.cam_x+pyxel.mouse_x, self.cam_y+pyxel.mouse_y, 2,2,5)
 
 App()
