@@ -11,7 +11,7 @@ class App():
         self.to_dead = []
         self.to_alive = []
         self.mode = 0
-        self.rules = [ [[3],[2,3]] , [[1],[0,1,4,5,6,7]] , [[1],[1]] , [[0,1,2,3,4,7,8],[3,4,6,7,8]] ]
+        self.rules = ["Conway's Game","Fuzz","Gnari","Inverse Life"]
         self.jeu_lance = False
         self.menu_stat = True
         pyxel.run(self.update, self.draw)
@@ -177,19 +177,27 @@ class App():
         if self.menu_stat == True:
             pyxel.text(5,5, 'Game Of Life', 7)
             pyxel.text(5,20, 'Choose your version', 7)
+
+            #Conway's Game
             pyxel.blt(5,65,0,0,0,16,16)
             pyxel.text(25,65,"Conway's",7)
             pyxel.text(25,75,"Game",7)
+
+            #Fuzz
             pyxel.blt(65,65,0,16,0,16,16)
             pyxel.text(85,65,"Fuzz",7)
+
+            #Gnari
             pyxel.blt(5,110,0,0,16,16,16)
             pyxel.text(25,110,"Gnari",7)
+
+            #Inverse Life
             pyxel.blt(65,110,0,16,16,16,16)
             pyxel.text(85,110,"Inverse",7)
             pyxel.text(85,120,"Life",7)
 
         else:
-            pyxel.text(5,5,'mode:'+str(self.mode),7)
+            pyxel.text(5,5,'mode:'+self.rules[self.mode-1],7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
         pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
