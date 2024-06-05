@@ -3,7 +3,7 @@ import pyxel
 class App():
     def __init__(self):
         pyxel.init(128,128,title="Game Of Life", fps=10)
-        pyxel.load("game.pyxres")
+        pyxel.load("gameoflife.pyxres")
         self.alive_cells = []
         self.dead_cells = [[i,j] for i in range(0,128) for j in range(0,128) if [i,j] not in self.alive_cells]
         self.cam_x = 0
