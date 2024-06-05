@@ -46,6 +46,14 @@ class App():
         return cpt
 
     def change_stat(self):
+        '''
+        @to_dead : list
+        @to_alive : list
+        @alive_cells : list
+        @dead_cells : list
+
+        change l'état d'une cellule
+        '''
         self.to_dead = []
         self.to_alive = []
         for cell in self.alive_cells:
@@ -84,6 +92,11 @@ class App():
             self.dead_cells.append(cell)
 
     def selectionner(self) :
+        '''
+        @alive_cell : list
+        @dead_cells : list
+        change le statut de la cellule cliquée quand la simulation est en pause
+        '''
         if pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT) :
             if not [(self.cam_x+pyxel.mouse_x)//2,(self.cam_y+pyxel.mouse_y)//2] in self.alive_cells :
                 self.alive_cells.append([(self.cam_x+pyxel.mouse_x)//2,(self.cam_y+pyxel.mouse_y)//2])
@@ -109,6 +122,11 @@ class App():
         pyxel.camera(self.cam_x, self.cam_y)
 
     def menu(self):
+        '''
+        @menu_stat : bool
+        @mode : int
+        permet la selection de la règle du jeu de la vie en changeant @mode puis met @menu_stat à True pour lancer la simulation
+        '''
         if pyxel.btn(pyxel.KEY_RETURN):
             self.menu_stat = False
         if pyxel.mouse_x>5 and pyxel.mouse_x<21 and pyxel.mouse_y>65 and pyxel.mouse_y<81 and pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
@@ -158,6 +176,10 @@ class App():
             pyxel.text(5,5,'mode:'+str(self.mode),7)
             for cell in self.alive_cells:
                 pyxel.rect(cell[0]*2, cell[1]*2, 2,2, 7)
+            pyxel.rect(-5,-5,266,5,5)
+            pyxel.rect(-5,-5,5,266,5)
+            pyxel.rect(261,-5,5,266,5)
+            pyxel.rect(-5,256,266,5,5)
         pyxel.rect(pyxel.mouse_x, pyxel.mouse_y, 2,2,5)
 
 App()
