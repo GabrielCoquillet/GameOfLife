@@ -59,34 +59,36 @@ class App():
 
         #vérification de mort de cellule : 
 
-        for cell in self.alive_cells: 
+        for cell in self.alive_cells:
+            proxi = self.prox(cell[0], cell[1])
             if self.mode == 1: #S23 -> Conway's Game Of Life
-                if self.prox(cell[0], cell[1])!=2 and self.prox(cell[0], cell[1])!=3:
+                if proxi!=2 and proxi!=3:
                     self.to_dead.append(cell)
             elif self.mode == 2: #S014567 -> Fuzz
-                if self.prox(cell[0], cell[1])!=0 and self.prox(cell[0], cell[1])!=1 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=5 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7:
+                if proxi!=0 and proxi!=1 and proxi!=4 and proxi!=5 and proxi!=6 and proxi!=7:
                     self.to_dead.append(cell)
             elif self.mode == 3: #S1 -> Gnari
-                if self.prox(cell[0], cell[1])!=1:
+                if proxi!=1:
                     self.to_dead.append(cell)
             elif self.mode == 4: #S34678 -> InverseLife
-                if self.prox(cell[0], cell[1])!=3 and self.prox(cell[0], cell[1])!=4 and self.prox(cell[0], cell[1])!=6 and self.prox(cell[0], cell[1])!=7 and self.prox(cell[0], cell[1])!=8:
+                if proxi!=3 and proxi!=4 and proxi!=6 and proxi!=7 and proxi!=8:
                     self.to_dead.append(cell)
         
         #verification de naissance de cellule :
 
         for cell in self.dead_cells:
+            proxi = self.prox(cell[0], cell[1])
             if self.mode ==1: #B3 -> Conway's Game Of Life
-                if self.prox(cell[0], cell[1])==3:
+                if proxi==3:
                     self.to_alive.append(cell)
             elif self.mode == 2: #B1 -> Fuzz
-                if self.prox(cell[0], cell[1])==1:
+                if proxi==1:
                     self.to_alive.append(cell)
             elif self.mode == 3: #B1 -> Gnari
-                if self.prox(cell[0], cell[1])==1:
+                if proxi==1:
                     self.to_alive.append(cell)
             elif self.mode == 4: #B0123478 -> InverseLife
-                if self.prox(cell[0], cell[1])==0 or self.prox(cell[0], cell[1])==1 or self.prox(cell[0], cell[1])==2 or self.prox(cell[0], cell[1])==3 or self.prox(cell[0], cell[1])==4 or self.prox(cell[0], cell[1])==7 or self.prox(cell[0], cell[1])==8:
+                if proxi==0 or proxi==1 or proxi==2 or proxi==3 or proxi==4 or proxi==7 or proxi==8:
                     self.to_alive.append(cell)
 
         #update des listes :
